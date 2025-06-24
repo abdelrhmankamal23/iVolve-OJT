@@ -1,0 +1,15 @@
+---
+- name: Download kubectl binary
+  get_url:
+    url: "{{ kubectl_url }}"
+    dest: "{{ kubectl_dest }}"
+    mode: '0755'
+
+- name: Verify kubectl CLI
+  command: "{{ kubectl_dest }} version --client"
+  register: kubectl_version_check
+  changed_when: false
+
+- name: Show version
+  debug:
+    msg: "The Current Vesion of Kubectl is {{ kubectl_version_check.stdout }}"

@@ -1,0 +1,23 @@
+---
+- name: Install Docker
+  apt:
+    name: "{{ docker_package }}"
+    state: present
+    update_cache: yes
+
+- name: Add user to docker group
+  user:
+    name: "{{ docker_user }}"
+    groups: docker
+    append: yes
+
+- name: Ensure Docker is running and enabled
+  service:
+    name: docker
+    state: started
+    enabled: true
+
+- name: Verify Docker installation
+  command: docker --version
+  register: docker_version
+  changed_when: false

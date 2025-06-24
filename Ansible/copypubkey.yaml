@@ -1,0 +1,10 @@
+---
+- name: SSH copy new key to target nodes
+  hosts: all
+  become: yes
+  tasks:
+    - name: Upload the key
+      ansible.builtin.authorized_key:
+        user: ubuntu
+        state: present
+        key: "{{ lookup('file', '~/.ssh/ivolvekey.pub') }}"

@@ -1,0 +1,33 @@
+---
+
+- name: Configure a web server with Nginx
+  hosts: all
+  become: true
+  
+  tasks:
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: true
+
+    - name: Customize to return your web page
+      copy:
+        src: /home/abdelrhman/index.html
+        dest: /var/www/html/index.nginx-debian.html
+
+    - name: Enable Nginx
+      service:
+        name: nginx
+        state: started
+        enabled: true
+
+    - name: Confirmation
+      uri:
+        url: http://localhost
+        return_content: yes
+      register: nginx_response
+
+    - name: Test a request
+      debug:
+        msg: "Web page content: {{ nginx_response.content }}"
