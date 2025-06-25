@@ -1,0 +1,14 @@
+plugin: aws_ec2
+aws_profile: Abdelrhman-Admin
+regions:
+  - us-east-2
+
+hostnames:
+  - ip-address
+
+keyed_groups:
+  - prefix: Instance_architecture
+    key: architecture
+   
+groups:
+  AZ_2a: "'serverA' in tags.Name" 
